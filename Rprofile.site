@@ -23,8 +23,7 @@
 #})
 
 local({
- # add MASS to the default packages, set a CRAN mirror
- old <- getOption("defaultPackages"); r <- getOption("repos")
+ r <- getOption("repos")
  r["CRAN"] <- "http://cloud.r-project.org/"
- options(defaultPackages = c(old, "MASS"), repos = r)
+ options(repos=r)
 })
