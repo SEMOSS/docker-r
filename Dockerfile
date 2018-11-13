@@ -2,41 +2,29 @@ FROM tbanach/docker-tomcat
 
 LABEL maintainer="semoss@semoss.org"
 
+# Needed for RCurl:
+#	libssl-dev
+#	libcurl4-openssl-dev
+#	libxml2-dev
+# Needed for Rcpp:
+#	
 RUN apt-get update \
-	&& apt install -y r-base \
+	&& apt-get install -y r-base \
 	&& R CMD javareconf \
 	&& git clone https://github.com/SEMOSS/docker-r.git \
-	&& cp -f docker-r/Rprofile.site /etc/R/Rprofile.site \
 	&& cp -f docker-r/Rserve.conf /etc/Rserve.conf \
+	&& apt install -y libssl-dev \
+	&& apt-get install -y libcurl4-openssl-dev \
+	&& apt-get install -y libxml2-dev \
+	&& echo 'options(repos = c(CRAN = "http://cloud.r-project.org/"))' >> /etc/R/Rprofile.site \
+	&& wget --no-check-certificate --output-document=AnomalyDetectionV1.0.0.tar.gz https://github.com/twitter/AnomalyDetection/archive/v1.0.0.tar.gz \
+	&& mkdir /opt/status \
+	&& mkdir /opt/status/R \
 	&& Rscript docker-r/Packages.R \
 	&& rm -r docker-r \
+	&& rm AnomalyDetectionv1.0.0.tar.gz \
 	&& apt-get clean all
 
+WORKDIR ~/
 
-
-
-
-	&& apt-get install -y software-properties-common \
-	# Need Java for rJava
-	&& apt-get install -y  openjdk-8-jdk \
-	&& apt install -y wget \
-	&& apt install -y git \
-	&& apt install -y procps \
-	&& apt install -y r-base \
-	&& R CMD javareconf \
-	&& mkdir /opt/semosshome \
-	# the open SSL libraries dont come pre-installed with debian
-	&& apt install -y libssl-dev \
-	&& apt install -y libcurl4-openssl-dev \
-	&& apt install -y vim \
-	&& cd /opt/semosshome \
-	&& git clone https://github.com/prabhuk12/dockR \
-	# to ensure it doesn't ask for CRAN
-	&& cp /opt/semosshome/dockR/Rprofile.site /etc/R/Rprofile.site \
-	&& cp /opt/semosshome/dockR/Rserve.conf /etc \
-	&& Rscript /opt/semosshome/dockR/Packages.R \
-	&& apt-get clean all
-
-WORKDIR /opt/semosshome/dockR
-
-CMD ["Rscript", "start.R"]
+CMD ["bash"]
