@@ -1,4 +1,8 @@
-# Helper method to check whether a package has been installed
+
+
+######################################################################
+# Method to check whether a package is installed
+######################################################################
 is.installed <- function(package) {
 
 	# Check if installed
@@ -12,8 +16,11 @@ is.installed <- function(package) {
 	return(installed)
 }
 
-# Install script
-register.install <- function(packages) {
+
+######################################################################
+# Method to install a package if it is not yet installed
+######################################################################
+install <- function(packages, script="install.packages(package, dependencies=TRUE)") {
 
 	# Keep track of the progress
 	success <- c()
@@ -33,7 +40,7 @@ register.install <- function(packages) {
 			# If not, then try to install it
 			installed = is.installed(package)
 			if (!installed) {
-				install.packages(package, dependencies=TRUE)
+				eval(parse(text=script))
 				
 				# Check again after install
 				installed = is.installed(package)
@@ -53,54 +60,34 @@ register.install <- function(packages) {
 	return(list("success"=success, "fail"=fail))
 }
 
-# First get the tricky ones out of the way
+
+######################################################################
+# Install packages that require customizations
+######################################################################
 success <- c()
 fail <- c()
 
 # BH (needed for RcppParallel)
-package <- "BH"
-install.packages(package, dependencies=TRUE)
-if (is.installed(package)) {
-	success <- c(success, package)
-} else {
-	fail <- c(fail, package)
-}
-
-# RcppParallel (needed for text2vec)
-package <- "RcppParallel"
-install.packages(package, type = "source", repos="https://RcppCore.github.io/drat", dependencies=TRUE)
-if (is.installed(package)) {
-	success <- c(success, package)
-} else {
-	fail <- c(fail, package)
-}
-
 # ggplot2 (needed for AnomalyDetection)
-package <- "ggplot2"
-install.packages(package, dependencies=TRUE)
-if (is.installed(package)) {
-	success <- c(success, package)
-} else {
-	fail <- c(fail, package)
-}
-
 # lubridate (needed for AnomalyDetection)
-package <- "lubridate"
-install.packages(package, dependencies=TRUE)
-if (is.installed(package)) {
-	success <- c(success, package)
-} else {
-	fail <- c(fail, package)
-}
+ret <- install(c("BH", "ggplot2", "lubridate"))
+success <- c(success, ret$success)
+fail <- c(fail, ret$fail)
 
-# AnomalyDetection (no CRAN version, need to install from zip)
-install.packages("~/AnomalyDetectionV1.0.0.tar.gz", type="source", dependencies=TRUE)
-package <- "AnomalyDetection"
-if (is.installed(package)) {
-	success <- c(success, package)
-} else {
-	fail <- c(fail, package)
-}
+# RcppParallel (needed for text2vec) (source install required)
+ret <- install(c("RcppParallel"), script='install.packages(package, type = "source", repos="https://RcppCore.github.io/drat", dependencies=TRUE)')
+success <- c(success, ret$success)
+fail <- c(fail, ret$fail)
+
+# AnomalyDetection (dev install required)
+ret <- install(c("AnomalyDetection"), script='install.packages("~/AnomalyDetectionV1.0.0.tar.gz", type="source", dependencies=TRUE)')
+success <- c(success, ret$success)
+fail <- c(fail, ret$fail)
+
+
+######################################################################
+# Install all other packages
+######################################################################
 
 # Array of packages, in alphabetical order
 packages <- c("arules", 
@@ -144,11 +131,14 @@ packages <- c("arules",
 			  "XML")
 			  
 # Run the installer
-ret <- register.install(packages)
+ret <- install(packages)
 success <- c(success, ret$success)
 fail <- c(fail, ret$fail)
 
-# Write the status
+
+######################################################################
+# Write the install status to disk
+######################################################################
 write.table(data.frame(success=ret["success"]), 
 			file = "/opt/status/R/success.csv", 
 			quote = FALSE, 
