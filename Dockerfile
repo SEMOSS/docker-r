@@ -24,7 +24,7 @@ RUN apt-get update \
 	&& mkdir /opt/status/R \
 	&& wget --no-check-certificate --output-document=AnomalyDetectionV1.0.0.tar.gz https://github.com/twitter/AnomalyDetection/archive/v1.0.0.tar.gz \
 	&& Rscript docker-r/Packages.R \
-	&& rm AnomalyDetectionv1.0.0.tar.gz \
+	&& rm AnomalyDetectionV1.0.0.tar.gz \
 	&& rm -r docker-r \
 	&& apt-get clean all
 

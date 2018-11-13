@@ -113,7 +113,6 @@ packages <- c("arules",
 			  "RCurl", 
 			  "readxl", 
 			  "reshape2", 
-			  "reticulate", 
 			  "rJava", 
 			  "RJDBC", 
 			  "RSclient", 
@@ -139,13 +138,13 @@ fail <- c(fail, ret$fail)
 ######################################################################
 # Write the install status to disk
 ######################################################################
-write.table(data.frame(success=ret["success"]), 
+write.table(data.frame(success=success), 
 			file = "/opt/status/R/success.csv", 
 			quote = FALSE, 
 			sep = ",", 
 			row.names = FALSE, 
 			col.names = FALSE)
-write.table(data.frame(fail=ret["fail"]), 
+write.table(data.frame(fail=fail), 
 			file = "/opt/status/R/fail.csv", 
 			quote = FALSE, 
 			sep = ",", 
