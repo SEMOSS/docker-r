@@ -124,8 +124,8 @@ packages <- c("arules",
 			  "textreuse", 
 			  "tidyr", 
 			  "tidyselect", 
-			  "WikidataR", 
 			  "WikipediR", 
+			  "WikidataR", 
 			  "withr", 
 			  "XML")
 			  
