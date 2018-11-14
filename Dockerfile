@@ -28,6 +28,6 @@ RUN apt-get update \
 	&& rm -r docker-r \
 	&& apt-get clean all
 
-WORKDIR ~/
+WORKDIR /opt
 
 CMD ["bash"]
