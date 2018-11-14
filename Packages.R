@@ -124,13 +124,12 @@ packages <- c("arules",
 			  "textreuse", 
 			  "tidyr", 
 			  "tidyselect", 
-			  "WikipediR", 
 			  "WikidataR", 
+			  "WikipediR", 
 			  "withr", 
 			  "XML")
 			  
 # Run the installer (run twice)
-install(packages)
 ret <- install(packages)
 success <- c(success, ret$success)
 fail <- c(fail, ret$fail)
