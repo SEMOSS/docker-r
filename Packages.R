@@ -129,7 +129,7 @@ packages <- c("arules",
 			  "withr", 
 			  "XML")
 			  
-# Run the installer (run twice)
+# Run the installer
 ret <- install(packages)
 success <- c(success, ret$success)
 fail <- c(fail, ret$fail)
