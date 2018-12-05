@@ -4,6 +4,7 @@ if (!require("pacman")) install.packages("pacman")
 # Function to recursively install all packages and their dependencies
 recursively_install <- function(packages, completed) {
 	for (package in packages) {
+		cat(">>>>>>>>>>>> Starting installation of package: ", package)
 		if (!require(package, character.only=TRUE)) {
 			dependencies <- pacman::p_depends(package, character.only=TRUE)
 			recursively_install(dependencies)
@@ -11,7 +12,7 @@ recursively_install <- function(packages, completed) {
 				pacman::p_install(package, character.only=TRUE)
 			}
 		}
-		cat(">>>>>>>>>>>> completed installation of package: ", package)
+		cat(">>>>>>>>>>>> Completed installation of package: ", package)
 	}
 }
 
