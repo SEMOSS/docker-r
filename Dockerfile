@@ -10,7 +10,6 @@ LABEL maintainer="semoss@semoss.org"
 #	libssl-dev
 #	libcurl4-openssl-dev
 #	libxml2-dev
-# Install R packages
 RUN apt-get update \
 	&& cd ~/ \
 	&& apt-get install -y dirmngr \
