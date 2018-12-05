@@ -7,8 +7,9 @@ recursively_install <- function(packages, completed) {
 		cat(">>>>>>>>>>>> Starting installation of package: ", package)
 		if (!require(package, character.only=TRUE)) {
 			dependencies <- pacman::p_depends(package, character.only=TRUE)
-			recursively_install(dependencies)
+			recursively_install(dependencies, completed)
 			if (!is.element(package, completed)) {
+				completed <- c(completed, package)
 				pacman::p_install(package, character.only=TRUE)
 			}
 		}
