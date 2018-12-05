@@ -2,19 +2,22 @@
 if (!require("pacman")) install.packages("pacman")
 
 # Function to recursively install all packages and their dependencies
-recursively_install <- function(packages, completed) {
-	for (package in packages) {
-		cat(">>>>>>>>>>>> Starting installation of package: ", package)
-		if (!require(package, character.only=TRUE)) {
-			dependencies <- pacman::p_depends(package, character.only=TRUE)
-			recursively_install(dependencies, completed)
-			if (!is.element(package, completed)) {
-				completed <- c(completed, package)
-				pacman::p_install(package, character.only=TRUE)
+recursively_install_parent <- function(packages, completed) {
+	recursively_install <- function(packages) {
+		for (package in packages) {
+			cat(">>>>>>>>>>>> Starting installation of package: ", package)
+			if (!require(package, character.only=TRUE)) {
+				dependencies <- pacman::p_depends(package, character.only=TRUE)
+				recursively_install(dependencies)
+				if (!is.element(package, completed)) {
+					completed <<- c(completed, package)
+					pacman::p_install(package, character.only=TRUE)
+				}
 			}
+			cat(">>>>>>>>>>>> Completed installation of package: ", package)
 		}
-		cat(">>>>>>>>>>>> Completed installation of package: ", package)
 	}
+	recursively_install(packages)
 }
 
 # List of packages to install
@@ -87,7 +90,7 @@ packages <- c("arules",
 
 # Install all packages and their dependencies	
 completed <- ()  
-recursively_install(packages, completed)
+recursively_install_parent(packages, completed)
 
 # Install AnomalyDetection from GitHub
 pacman::p_install_gh(c("twitter/AnomalyDetection"))
