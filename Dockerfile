@@ -1,4 +1,4 @@
-FROM tbanach/docker-tomcat
+FROM semoss/docker-tomcat
 
 LABEL maintainer="semoss@semoss.org"
 
