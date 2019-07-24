@@ -21,7 +21,7 @@ RUN apt-get update \
 	&& apt-get install -y r-base \
 	&& R CMD javareconf \
 	&& git clone https://github.com/SEMOSS/docker-r.git \
-	&& cp -f docker-r/Rserve.conf /etc/Rserve.conf \
+	&& cp -f docker-r/Rserv.conf /etc/Rserv.conf \
 	&& apt install -y libssl-dev \
 	&& apt-get install -y libcurl4-openssl-dev \
 	&& apt-get install -y libxml2-dev \
