@@ -1,4 +1,4 @@
-FROM semoss/docker-tomcat
+FROM semoss/docker-tomcat:9.0.26
 
 LABEL maintainer="semoss@semoss.org"
 
@@ -20,7 +20,7 @@ RUN apt-get update \
 	&& apt-get update \
 	&& apt-get -y install r-base-core=3.5.2-1~stretchcran.0 --allow-downgrades \
 	&& apt-get -y install r-doc-html=3.5.2-1~stretchcran.0 --allow-downgrades \
-	&& apt-get -y install r-base-dev=3.5.2-1~stretchcran.0 --allow-downgrades \	
+	&& apt-get -y install r-base-dev=3.5.2-1~stretchcran.0 --allow-downgrades \
 	&& R CMD javareconf \
 	&& git clone https://github.com/SEMOSS/docker-r.git \
 	&& cp -f docker-r/Rserv.conf /etc/Rserv.conf \
