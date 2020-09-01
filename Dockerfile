@@ -1,4 +1,4 @@
-FROM semoss/docker-tomcat:debian10
+FROM semoss/docker-tomcat:9.0.37
 
 LABEL maintainer="semoss@semoss.org"
 
