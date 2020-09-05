@@ -18,7 +18,7 @@ RUN apt-get update \
 	&& apt-key adv --keyserver keys.gnupg.net --recv-key 'E19F5F87128899B192B1A2C2AD5F960A256A04AF' \
 	&& add-apt-repository 'deb http://cloud.r-project.org/bin/linux/debian buster-cran35/' \
 	&& apt-get update \
-	&& apt-get install r-base-core=3.6.3-1~bustercran.0 --allow-downgrades  linux-libc-dev- gcc-8- \
+	&& apt-get -y install r-base-core=3.6.3-1~bustercran.0 --allow-downgrades  linux-libc-dev- gcc-8- \
 	&& apt-get -y install r-doc-html=3.6.3-1~bustercran.0 --allow-downgrades \
 	&& R CMD javareconf \
 	&& git clone https://github.com/SEMOSS/docker-r.git \
