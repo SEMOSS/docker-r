@@ -25,7 +25,7 @@ RUN apt-get update \
 	&& cp -f docker-r/Rserv.conf /etc/Rserv.conf \
 	&& apt install -y libssl-dev \
 	&& apt-get install -y libcurl4-openssl-dev \
-	&& apt-get install -y libxml2-dev \
+	#&& apt-get install -y libxml2-dev \
 	&& echo 'options(repos = c(CRAN = "http://cloud.r-project.org/"))' >> /etc/R/Rprofile.site \
 	&& rm -r docker-r \
 	&& apt-get clean all
