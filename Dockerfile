@@ -1,4 +1,4 @@
-FROM semoss/docker-tomcat:9.0.37
+FROM semoss/docker-tomcat:9.0.48
 
 LABEL maintainer="semoss@semoss.org"
 
@@ -15,11 +15,11 @@ RUN apt-get update \
 	&& apt-get install -y dirmngr \
 	&& apt-get install -y software-properties-common \
 	&& apt-get install -y apt-transport-https \
-	&& apt-key adv --keyserver keys.gnupg.net --recv-key 'E19F5F87128899B192B1A2C2AD5F960A256A04AF' \
-	&& add-apt-repository 'deb http://cloud.r-project.org/bin/linux/debian buster-cran35/' \
+	&& apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 'FCAE2A0E115C3D8A' \
+	&& add-apt-repository 'deb http://cloud.r-project.org/bin/linux/debian buster-cran40/' \
 	&& apt-get update \
-	&& apt-get -y install r-base-core=3.6.3-1~bustercran.0 --allow-downgrades  linux-libc-dev- gcc-8- \
-	&& apt-get -y install r-doc-html=3.6.3-1~bustercran.0 --allow-downgrades \
+	&& apt-get -y install r-base-core=4.1.0-1~bustercran.0 --allow-downgrades  linux-libc-dev- gcc-8- \
+	&& apt-get -y install r-doc-html=4.1.0-1~bustercran.0 --allow-downgrades \
 	&& R CMD javareconf \
 	&& git clone https://github.com/SEMOSS/docker-r.git \
 	&& cp -f docker-r/Rserv.conf /etc/Rserv.conf \
