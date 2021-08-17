@@ -1,4 +1,8 @@
-FROM semoss/docker-tomcat:debian10
+ARG BASE_REGISTRY=quay.io
+ARG BASE_IMAGE=semoss/docker-tomcat
+ARG BASE_TAG=debian10
+
+FROM ${BASE_REGISTRY}/${BASE_IMAGE}:${BASE_TAG} 
 
 LABEL maintainer="semoss@semoss.org"
 
