@@ -19,7 +19,7 @@ RUN apt-get update \
 	&& apt-get install -y dirmngr \
 	&& apt-get install -y software-properties-common \
 	&& apt-get install -y apt-transport-https \
-	&& apt-key adv --keyserver keys.gnupg.net --recv-key 'E19F5F87128899B192B1A2C2AD5F960A256A04AF' \
+	&& apt-key adv --keyserver keyserver.ubuntu.com --recv-key 'E19F5F87128899B192B1A2C2AD5F960A256A04AF' \
 	&& add-apt-repository 'deb http://cloud.r-project.org/bin/linux/debian buster-cran35/' \
 	&& apt-get update \
 	&& apt-get -y install r-base-core=3.6.3-1~bustercran.0 --allow-downgrades \
