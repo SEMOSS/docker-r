@@ -1,4 +1,10 @@
-FROM semoss/docker-tomcat:9.0.48
+#docker build . -t quay.io/semoss/docker-r:R4.1.1-debian11-builder
+
+ARG BASE_REGISTRY=quay.io
+ARG BASE_IMAGE=semoss/docker-tomcat
+ARG BASE_TAG=debian11
+
+FROM ${BASE_REGISTRY}/${BASE_IMAGE}:${BASE_TAG} 
 
 LABEL maintainer="semoss@semoss.org"
 
@@ -15,18 +21,16 @@ RUN apt-get update \
 	&& apt-get install -y dirmngr \
 	&& apt-get install -y software-properties-common \
 	&& apt-get install -y apt-transport-https \
-	&& apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 'FCAE2A0E115C3D8A' \
-	&& add-apt-repository 'deb http://cloud.r-project.org/bin/linux/debian buster-cran40/' \
+	&& apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 'E19F5F87128899B192B1A2C2AD5F960A256A04AF' \
+	&& add-apt-repository 'deb http://cloud.r-project.org/bin/linux/debian bullseye-cran40/' \
 	&& apt-get update \
-	&& apt-get -y install r-base-core=4.1.0-1~bustercran.0 --allow-downgrades \
-	&& apt-get -y install r-doc-html=4.1.0-1~bustercran.0 --allow-downgrades \
-	&& apt-get -y install r-base-dev=4.1.0-1~bustercran.0 --allow-downgrades \
+	&& apt-get -y install r-base-core=4.1.1-1~bullseyecran.0 --allow-downgrades \
+	&& apt-get -y install r-doc-html=4.1.1-1~bullseyecran.0 --allow-downgrades \
+	&& apt-get -y install r-base-dev=4.1.1-1~bullseyecran.0 --allow-downgrades \
 	&& R CMD javareconf \
 	&& git clone https://github.com/SEMOSS/docker-r.git \
 	&& cp -f docker-r/Rserv.conf /etc/Rserv.conf \
-	&& apt install -y libssl-dev \
-	&& apt-get install -y libcurl4-openssl-dev \
-	&& apt-get install -y libxml2-dev \
+	&& apt install -y apt-utils libssl-dev libcurl4-openssl-dev libxml2-dev \
 	&& echo 'options(repos = c(CRAN = "http://cloud.r-project.org/"))' >> /etc/R/Rprofile.site \
 	&& rm -r docker-r \
 	&& apt-get clean all
