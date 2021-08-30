@@ -24,7 +24,7 @@ RUN apt-get update \
 	&& apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 'E19F5F87128899B192B1A2C2AD5F960A256A04AF' \
 	&& add-apt-repository 'deb http://cloud.r-project.org/bin/linux/debian bullseye-cran40/' \
 	&& apt-get update \
-	&& apt-get -y install r-base-core=4.1.1-1~bullseyecran.0 --allow-downgrades linux-libc-dev- gcc-8- \
+	&& apt-get -y install r-base-core=4.1.1-1~bullseyecran.0 --allow-downgrades linux-libc-dev- gcc-10- \
 	&& apt-get -y install r-doc-html=4.1.1-1~bullseyecran.0 --allow-downgrades \
 	&& R CMD javareconf \
 	&& git clone https://github.com/SEMOSS/docker-r.git \
