@@ -33,6 +33,9 @@ RUN apt-get update \
 	&& apt install -y apt-utils libssl-dev libcurl4-openssl-dev libxml2-dev \
 	&& echo 'options(repos = c(CRAN = "http://cloud.r-project.org/"))' >> /etc/R/Rprofile.site \
 	&& rm -r docker-r \
+	&& cd /usr/lib/R \
+	&& wget https://github.com/jgm/pandoc/releases/download/2.17.1.1/pandoc-2.17.1.1-linux-amd64.tar.gz \
+	&& tar -xvf pandoc-2.17.1.1-linux-amd64.tar.gz \
 	&& apt-get clean all
 
 WORKDIR /opt
