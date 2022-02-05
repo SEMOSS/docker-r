@@ -20,6 +20,7 @@ RUN apt-get update \
 	&& apt-get install -y software-properties-common \
 	&& apt-get install -y apt-transport-https \
 	&& apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 'FCAE2A0E115C3D8A' \
+	&& apt-key adv --keyserver keyserver.ubuntu.com --recv-key 'B8F25A8A73EACF41' \
 	&& add-apt-repository 'deb http://cloud.r-project.org/bin/linux/debian buster-cran40/' \
 	&& apt-get update \
 	&& apt-get -y install r-base-core=4.1.0-1~bustercran.0 --allow-downgrades \
