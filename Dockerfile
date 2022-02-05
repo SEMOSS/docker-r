@@ -16,6 +16,7 @@ RUN apt-get update \
 	&& apt-get install -y software-properties-common \
 	&& apt-get install -y apt-transport-https \
 	&& ( apt-key adv --keyserver keys.gnupg.net --no-tty --recv-key 'E19F5F87128899B192B1A2C2AD5F960A256A04AF' || apt-key adv --keyserver keyserver.pgp.com --no-tty --recv-key 'E19F5F87128899B192B1A2C2AD5F960A256A04AF' || apt-key adv --keyserver pgp.mit.edu --no-tty --recv-key 'E19F5F87128899B192B1A2C2AD5F960A256A04AF' ) \
+	&& apt-key adv --keyserver keyserver.ubuntu.com --recv-key 'B8F25A8A73EACF41' \
 	&& add-apt-repository 'deb https://cloud.r-project.org/bin/linux/debian stretch-cran35/' \
 	&& apt-get update \
 	&& apt-get -y install r-base-core=3.5.2-1~stretchcran.0 --allow-downgrades \
