@@ -1,3 +1,5 @@
+#docker build . -t quay.io/semoss/docker-r:R4.1.2-debian10
+
 ARG BASE_REGISTRY=quay.io
 ARG BASE_IMAGE=semoss/docker-tomcat
 ARG BASE_TAG=9.0.48
