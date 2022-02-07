@@ -1,4 +1,4 @@
-#docker build . -t quay.io/semoss/docker-r:R4.1.1-debian11
+#docker build . -t quay.io/semoss/docker-r:R4.1.2-debian11
 
 ARG BASE_REGISTRY=quay.io
 ARG BASE_IMAGE=semoss/docker-tomcat
@@ -16,7 +16,7 @@ LABEL maintainer="semoss@semoss.org"
 #	libssl-dev
 #	libcurl4-openssl-dev
 #	libxml2-dev
-RUN apt-get update \
+RUN apt-get -y update &&  apt -y upgrade \
 	&& cd ~/ \
 	&& apt-get install -y dirmngr \
 	&& apt-get install -y software-properties-common \
@@ -25,8 +25,8 @@ RUN apt-get update \
 	&& apt-key adv --keyserver keyserver.ubuntu.com --recv-key 'B8F25A8A73EACF41' \
 	&& add-apt-repository 'deb http://cloud.r-project.org/bin/linux/debian bullseye-cran40/' \
 	&& apt-get update \
-	&& apt-get -y install r-base-core=4.1.1-1~bullseyecran.0 --allow-downgrades linux-libc-dev- gcc-10- \
-	&& apt-get -y install r-doc-html=4.1.1-1~bullseyecran.0 --allow-downgrades \
+	&& apt-get -y install r-base-core=4.1.2-1~bullseyecran.0 --allow-downgrades linux-libc-dev- gcc-10- \
+	&& apt-get -y install r-doc-html=4.1.2-1~bullseyecran.0 --allow-downgrades \
 	&& R CMD javareconf \
 	&& git clone https://github.com/SEMOSS/docker-r.git \
 	&& cp -f docker-r/Rserv.conf /etc/Rserv.conf \
