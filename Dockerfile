@@ -1,3 +1,5 @@
+#docker build . -t quay.io/semoss/docker-r:R4.1.2-debian10-builder
+
 ARG BASE_REGISTRY=quay.io
 ARG BASE_IMAGE=semoss/docker-tomcat
 ARG BASE_TAG=9.0.48
@@ -23,9 +25,9 @@ RUN apt-get update \
 	&& apt-key adv --keyserver keyserver.ubuntu.com --recv-key 'B8F25A8A73EACF41' \
 	&& add-apt-repository 'deb http://cloud.r-project.org/bin/linux/debian buster-cran40/' \
 	&& apt-get update \
-	&& apt-get -y install r-base-core=4.1.0-1~bustercran.0 --allow-downgrades \
-	&& apt-get -y install r-doc-html=4.1.0-1~bustercran.0 --allow-downgrades \
-	&& apt-get -y install r-base-dev=4.1.0-1~bustercran.0 --allow-downgrades \
+	&& apt-get -y install r-base-core=4.1.2-1~bustercran.0 --allow-downgrades \
+	&& apt-get -y install r-doc-html=4.1.2-1~bustercran.0 --allow-downgrades \
+	&& apt-get -y install r-base-dev=4.1.2-1~bustercran.0 --allow-downgrades \
 	&& R CMD javareconf \
 	&& git clone https://github.com/SEMOSS/docker-r.git \
 	&& cp -f docker-r/Rserv.conf /etc/Rserv.conf \
