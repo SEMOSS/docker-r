@@ -23,8 +23,8 @@ RUN apt-get update \
 	&& apt-key adv --keyserver keyserver.ubuntu.com --recv-key 'B8F25A8A73EACF41' \
 	&& add-apt-repository 'deb http://cloud.r-project.org/bin/linux/debian buster-cran40/' \
 	&& apt-get update \
-	&& apt-get -y install r-base-core=4.1.0-1~bustercran.0 --allow-downgrades  linux-libc-dev- gcc-8- \
-	&& apt-get -y install r-doc-html=4.1.0-1~bustercran.0 --allow-downgrades \
+	&& apt-get -y install r-base-core=4.1.2-1~bustercran.0 --allow-downgrades  linux-libc-dev- gcc-8- \
+	&& apt-get -y install r-doc-html=4.1.2-1~bustercran.0 --allow-downgrades \
 	&& R CMD javareconf \
 	&& git clone https://github.com/SEMOSS/docker-r.git \
 	&& cp -f docker-r/Rserv.conf /etc/Rserv.conf \
