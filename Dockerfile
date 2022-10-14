@@ -21,8 +21,8 @@ RUN apt-get -y update &&  apt -y upgrade \
 	&& apt-get install -y dirmngr \
 	&& apt-get install -y software-properties-common \
 	&& apt-get install -y apt-transport-https \
-	&& apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 'E19F5F87128899B192B1A2C2AD5F960A256A04AF' \
-	&& apt-key adv --keyserver keyserver.ubuntu.com --recv-key 'B8F25A8A73EACF41' \
+	&& apt-key adv --keyserver keyserver.ubuntu.com:80 --recv-keys 'E19F5F87128899B192B1A2C2AD5F960A256A04AF' \
+	&& apt-key adv --keyserver keyserver.ubuntu.com:80 --recv-key 'B8F25A8A73EACF41' \
 	&& add-apt-repository 'deb http://cloud.r-project.org/bin/linux/debian bullseye-cran40/' \
 	&& apt-get update \
 	&& apt-get -y install r-base-core=4.2.1-1~bullseyecran.0 --allow-downgrades linux-libc-dev- gcc-10- \
