@@ -8,6 +8,10 @@ FROM ${BASE_REGISTRY}/${BASE_IMAGE}:${BASE_TAG}
 
 LABEL maintainer="semoss@semoss.org"
 
+ENV R_HOME=/usr/lib/R
+ENV R_LIBRARY=/usr/local/lib/R/site-library
+ENV PATH=$PATH:$R_HOME/bin:$R_LIBRARY
+
 # Install R
 # 	(https://www.digitalocean.com/community/tutorials/how-to-install-r-on-debian-9)
 # Reconfigure java for rJava
