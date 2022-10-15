@@ -9,8 +9,9 @@ FROM ${BASE_REGISTRY}/${BASE_IMAGE}:${BASE_TAG}
 LABEL maintainer="semoss@semoss.org"
 
 ENV R_HOME=/usr/lib/R
-ENV R_LIBRARY=/usr/local/lib/R/site-library
-ENV PATH=$PATH:$R_HOME/bin:$R_LIBRARY
+ENV R_LIBS_SITE=/usr/local/lib/R/site-library
+ENV RSTUDIO_PANDOC=/usr/lib/R/pandoc-2.17.1.1/bin
+ENV PATH=$PATH:$R_HOME/bin:$R_LIBRARY:$RSTUDIO_PANDOC
 
 # Install R
 # 	(https://www.digitalocean.com/community/tutorials/how-to-install-r-on-debian-9)
