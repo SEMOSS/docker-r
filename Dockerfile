@@ -40,8 +40,8 @@ RUN apt-get -y update &&  apt -y upgrade \
 	&& rm -r docker-r \
 	&& cd /usr/lib/R \
 	&& arch=$(arch | sed s/aarch64/arm64/ | sed s/x86_64/amd64/) \
-   	&& wget "https://github.com/jgm/pandoc/releases/download/2.17.1.1/pandoc-2.17.1.1-linux-${arch}.tar.gz" \
-	&& tar -xvf pandoc-2.17.1.1-linux-amd64.tar.gz \
+  	&& wget "https://github.com/jgm/pandoc/releases/download/2.17.1.1/pandoc-2.17.1.1-linux-${arch}.tar.gz" \
+	&& tar -xvf pandoc-2.17.1.1-linux-*.tar.gz \
 	&& apt-get clean all
 
 WORKDIR /opt
