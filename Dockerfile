@@ -21,7 +21,7 @@ RUN apt-get update \
 	&& apt-get install -y dirmngr software-properties-common apt-transport-https apt-utils libssl-dev libcurl4-openssl-dev libxml2-dev \
 	&& git clone https://github.com/SEMOSS/docker-r.git \
 	&& cd docker-r \
-	&& git checkout R4.2.1-debian11  \
+	&& git checkout R4.2.1-debian11-builder  \
 	&& chmod +x install_R.sh \
 	&& /bin/bash install_R.sh \
 	&& R CMD javareconf \
