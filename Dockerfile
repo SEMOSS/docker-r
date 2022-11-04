@@ -23,7 +23,7 @@ ENV PATH=$PATH:$R_HOME/bin:$R_LIBRARY:$RSTUDIO_PANDOC
 #	libxml2-dev
 RUN apt-get -y update &&  apt -y upgrade \
 	&& cd ~/ \
-	&& apt-get install -y dirmngr software-properties-common apt-transport-https\
+	&& apt-get install -y dirmngr software-properties-common apt-transport-https libssl-dev libcurl4-openssl-dev\
 	&& git clone https://github.com/SEMOSS/docker-r.git \
 	&& cd docker-r \
 	&& git checkout R4.2.1-debian11  \
@@ -31,7 +31,6 @@ RUN apt-get -y update &&  apt -y upgrade \
 	&& /bin/bash install_R.sh \
 	&& R CMD javareconf \
 	&& cp -f Rserv.conf /etc/Rserv.conf \
-	&& apt install -y libssl-dev libcurl4-openssl-dev \
 	&& echo 'options(repos = c(CRAN = "http://cloud.r-project.org/"))' >> /etc/R/Rprofile.site \
 	&& cd .. \
 	&& rm -r docker-r \
