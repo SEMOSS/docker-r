@@ -23,24 +23,21 @@ ENV PATH=$PATH:$R_HOME/bin:$R_LIBRARY:$RSTUDIO_PANDOC
 #	libxml2-dev
 RUN apt-get -y update &&  apt -y upgrade \
 	&& cd ~/ \
-	&& apt-get install -y dirmngr \
-	&& apt-get install -y software-properties-common \
-	&& apt-get install -y apt-transport-https \
-	&& apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 'E19F5F87128899B192B1A2C2AD5F960A256A04AF' \
-	&& apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-key 'B8F25A8A73EACF41' \
-	&& add-apt-repository 'deb http://cloud.r-project.org/bin/linux/debian bullseye-cran40/' \
-	&& apt-get update \
-	&& apt-get -y install r-base-core=4.2.1-1~bullseyecran.0 --allow-downgrades linux-libc-dev- gcc-10- \
-	&& apt-get -y install r-doc-html=4.2.1-1~bullseyecran.0 --allow-downgrades \
-	&& R CMD javareconf \
+	&& apt-get install -y dirmngr software-properties-common apt-transport-https\
 	&& git clone https://github.com/SEMOSS/docker-r.git \
-	&& cp -f docker-r/Rserv.conf /etc/Rserv.conf \
+	&& cd docker-r \
+	&& git checkout R.4.2.1-debian11 \
+	&& chmod +x install_R.sh \
+	&& /bin/bash install_R.sh \
+	&& R CMD javareconf \
+	&& cp -f Rserv.conf /etc/Rserv.conf \
 	&& apt install -y libssl-dev libcurl4-openssl-dev \
 	&& echo 'options(repos = c(CRAN = "http://cloud.r-project.org/"))' >> /etc/R/Rprofile.site \
+	&& cd .. \
 	&& rm -r docker-r \
 	&& cd /usr/lib/R \
 	&& arch=$(arch | sed s/aarch64/arm64/ | sed s/x86_64/amd64/) \
-  	&& wget "https://github.com/jgm/pandoc/releases/download/2.17.1.1/pandoc-2.17.1.1-linux-${arch}.tar.gz" \
+    && wget "https://github.com/jgm/pandoc/releases/download/2.17.1.1/pandoc-2.17.1.1-linux-${arch}.tar.gz" \
 	&& tar -xvf pandoc-2.17.1.1-linux-*.tar.gz \
 	&& apt-get clean all
 
