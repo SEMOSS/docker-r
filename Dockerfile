@@ -18,21 +18,16 @@ LABEL maintainer="semoss@semoss.org"
 #	libxml2-dev
 RUN apt-get update \
 	&& cd ~/ \
-	&& apt-get install -y dirmngr \
-	&& apt-get install -y software-properties-common \
-	&& apt-get install -y apt-transport-https \
-	&& apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 'E19F5F87128899B192B1A2C2AD5F960A256A04AF' \
-	&& apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-key 'B8F25A8A73EACF41' \
-	&& add-apt-repository 'deb http://cloud.r-project.org/bin/linux/debian bullseye-cran40/' \
-	&& apt-get update \
-	&& apt-get -y install r-base-core=4.2.1-1~bullseyecran.0 --allow-downgrades \
-	&& apt-get -y install r-doc-html=4.2.1-1~bullseyecran.0 --allow-downgrades \
-	&& apt-get -y install r-base-dev=4.2.1-1~bullseyecran.0 --allow-downgrades \
-	&& R CMD javareconf \
+	&& apt-get install -y dirmngr software-properties-common apt-transport-https apt-utils libssl-dev libcurl4-openssl-dev libxml2-dev \
 	&& git clone https://github.com/SEMOSS/docker-r.git \
-	&& cp -f docker-r/Rserv.conf /etc/Rserv.conf \
-	&& apt install -y apt-utils libssl-dev libcurl4-openssl-dev libxml2-dev \
+	&& cd docker-r \
+	&& git checkout R4.2.1-debian11  \
+	&& chmod +x install_R.sh \
+	&& /bin/bash install_R.sh \
+	&& R CMD javareconf \
+	&& cp -f Rserv.conf /etc/Rserv.conf \
 	&& echo 'options(repos = c(CRAN = "http://cloud.r-project.org/"))' >> /etc/R/Rprofile.site \
+	&& cd .. \
 	&& rm -r docker-r \
 	&& cd /usr/lib/R \
 	&& arch=$(arch | sed s/aarch64/arm64/ | sed s/x86_64/amd64/) \
