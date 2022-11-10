@@ -11,8 +11,8 @@ elif  [[ $arch == arm* ]] || [[ $arch = aarch64 ]]; then
     echo "ARM Architecture"
     echo "deb http://http.debian.net/debian sid main" > /etc/apt/sources.list.d/debian-unstable.list
     apt-get update
-    apt-get -y install r-base-core=4.2.2-1 --allow-downgrades linux-libc-dev- gcc-10-
-    apt-get -y install r-doc-html=4.2.2-1 --allow-downgrades
+    apt-get -y install r-base-core=4.2.2-1+b1 --allow-downgrades linux-libc-dev- gcc-10-
+    apt-get -y install r-doc-html=4.2.2-1+b1 --allow-downgrades
     rm /etc/apt/sources.list.d/debian-unstable.list
     apt-get update
 fi
