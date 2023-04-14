@@ -1,4 +1,4 @@
-#docker build . -t quay.io/semoss/docker-r:cuda12-R4.2.1
+#docker build . -t quay.io/semoss/docker-r:cuda12-R4.2.1-builder
 
 ARG BASE_REGISTRY=quay.io
 ARG BASE_IMAGE=semoss/docker-tomcat
@@ -27,7 +27,7 @@ ENV PATH=$PATH:$R_HOME/bin:$R_LIBRARY:$RSTUDIO_PANDOC
  
 RUN apt-get -y update &&  apt -y upgrade \
 	&& cd ~/ \
-	&& apt-get install -y dirmngr software-properties-common apt-transport-https libssl-dev libcurl4-openssl-dev\
+	&& apt-get install -y dirmngr software-properties-common apt-transport-https apt-utils libssl-dev libcurl4-openssl-dev libxml2-dev \
 	&& mkdir /opt/docker-r
 
 COPY . /opt/docker-r
