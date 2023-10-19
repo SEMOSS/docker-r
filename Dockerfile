@@ -3,14 +3,15 @@
 ARG BASE_REGISTRY=quay.io
 ARG BASE_IMAGE=semoss/docker-tomcat
 ARG BASE_TAG=ubi8.8
-ARG R_VERSION=4.2.3
+
 
 FROM ${BASE_REGISTRY}/${BASE_IMAGE}:${BASE_TAG} 
 
 LABEL maintainer="semoss@semoss.org"
 
-ENV R_HOME=/usr/lib/R
-ENV R_LIBS_SITE=/usr/local/lib/R/site-library
+ENV R_VERSION=4.2.3
+ENV R_LIBS_SITE=/opt/R/4.2.3/lib/R/library
+ENV R_HOME=/opt/R
 ENV RSTUDIO_PANDOC=/usr/lib/R/pandoc-2.17.1.1/bin
 ENV PATH=$PATH:$R_HOME/bin:$R_LIBRARY:$RSTUDIO_PANDOC
 
@@ -33,13 +34,13 @@ RUN cd ~/ \
 	&& /bin/bash install_R.sh \
 	&& R CMD javareconf \
 	&& cp -f Rserv.conf /etc/Rserv.conf \
-	&& echo 'options(repos = c(CRAN = "http://cloud.r-project.org/"))' >> /etc/R/Rprofile.site \
+	&& echo 'options(repos = c(CRAN = "http://cloud.r-project.org/"))' > /opt/R/${R_VERSION}/lib/R/etc/Rprofile.site \
 	&& cd .. \
-	&& rm -r docker-r \
-	&& cd /usr/lib/R \
-	&& arch=$(arch | sed s/aarch64/arm64/ | sed s/x86_64/amd64/) \
-    && wget "https://github.com/jgm/pandoc/releases/download/2.17.1.1/pandoc-2.17.1.1-linux-${arch}.tar.gz" \
-	&& tar -xvf pandoc-2.17.1.1-linux-*.tar.gz 
+	&& rm -r docker-r
+	# && cd /usr/lib/R \
+	# && arch=$(arch | sed s/aarch64/arm64/ | sed s/x86_64/amd64/) \
+    # && wget "https://github.com/jgm/pandoc/releases/download/2.17.1.1/pandoc-2.17.1.1-linux-${arch}.tar.gz" \
+	# && tar -xvf pandoc-2.17.1.1-linux-*.tar.gz 
 
 WORKDIR /opt
 
