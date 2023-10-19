@@ -5,4 +5,4 @@ yum -y install R-${R_VERSION}-1-1.x86_64.rpm
 /opt/R/${R_VERSION}/bin/R --version
 ln -s /opt/R/${R_VERSION}/bin/R /usr/local/bin/R
 ln -s /opt/R/${R_VERSION}/bin/Rscript /usr/local/bin/Rscript
-rm R-${R_VERSION}-1-1.x86_64.rpms
+rm R-${R_VERSION}-1-1.x86_64.rpm
