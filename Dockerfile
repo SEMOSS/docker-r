@@ -7,7 +7,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 
 FROM ${BASE_REGISTRY}/${BASE_IMAGE}:${BASE_TAG} 
 
-LABEL maintainer="semoss@semoss.org".
+LABEL maintainer="semoss@semoss.org"
 
 ENV DEBIAN_FRONTEND=noninteractive 
 
