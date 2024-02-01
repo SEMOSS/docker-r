@@ -1,8 +1,8 @@
 #docker build . -t quay.io/semoss/docker-r:cuda12-R4.2.1
 
-ARG BASE_REGISTRY=quay.io
-ARG BASE_IMAGE=semoss/docker-tomcat
-ARG BASE_TAG=cuda12
+ARG BASE_REGISTRY=docker.io
+ARG BASE_IMAGE=nvidia/cuda
+ARG BASE_TAG=12.2.2-devel-ubuntu22.04
 ARG DEBIAN_FRONTEND=noninteractive
 
 FROM ${BASE_REGISTRY}/${BASE_IMAGE}:${BASE_TAG} 
@@ -24,10 +24,10 @@ ENV PATH=$PATH:$R_HOME/bin:$R_LIBRARY:$RSTUDIO_PANDOC
 #	libssl-dev
 #	libcurl4-openssl-dev
 #	libxml2-dev
- 
+
 RUN apt-get -y update &&  apt -y upgrade \
 	&& cd ~/ \
-	&& apt-get install -y dirmngr software-properties-common apt-transport-https libssl-dev libcurl4-openssl-dev\
+	&& apt-get install -y dirmngr wget software-properties-common apt-transport-https libssl-dev libcurl4-openssl-dev\
 	&& mkdir /opt/docker-r
 
 COPY . /opt/docker-r
@@ -36,7 +36,7 @@ RUN cd /opt/docker-r \
 	&& ls \
 	&& chmod +x install_R.sh \
 	&& /bin/bash install_R.sh \
-	&& R CMD javareconf \
+	# && R CMD javareconf \
 	&& cp -f Rserv.conf /etc/Rserv.conf \
 	&& echo 'options(repos = c(CRAN = "http://cloud.r-project.org/"))' >> /etc/R/Rprofile.site \
 	&& cd .. \
@@ -44,7 +44,7 @@ RUN cd /opt/docker-r \
 
 RUN cd /usr/lib/R \
 	&& arch=$(arch | sed s/aarch64/arm64/ | sed s/x86_64/amd64/) \
-    && wget "https://github.com/jgm/pandoc/releases/download/2.17.1.1/pandoc-2.17.1.1-linux-${arch}.tar.gz" \
+	&& wget "https://github.com/jgm/pandoc/releases/download/2.17.1.1/pandoc-2.17.1.1-linux-${arch}.tar.gz" \
 	&& tar -xvf pandoc-2.17.1.1-linux-*.tar.gz \
 	&& apt-get clean all
 
