@@ -2,7 +2,7 @@
 
 ARG BASE_REGISTRY=quay.io
 ARG BASE_IMAGE=semoss/docker-tomcat
-ARG BASE_TAG=ubi8.8
+ARG BASE_TAG=ubi8
 
 
 FROM ${BASE_REGISTRY}/${BASE_IMAGE}:${BASE_TAG} 
