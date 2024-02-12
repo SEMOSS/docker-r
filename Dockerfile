@@ -23,7 +23,7 @@ ENV PATH=$PATH:$R_HOME/bin:$R_LIBRARY:$RSTUDIO_PANDOC
 #	libssl-dev
 #	libcurl4-openssl-dev
 #	libxml2-dev
-RUN yum install -y less tk gcc bzip2-devel git gcc-c++ gcc-gfortran libSM libXmu libXt  \
+RUN yum install -y less tk gcc bzip2-devel gcc-c++ gcc-gfortran libSM libXmu libXt  \
 	libcurl-devel libicu-devel libtiff make openblas-threads pango pcre2-devel   \
 	tcl xz-devel zip zlib-devel
 
