@@ -23,20 +23,20 @@ ENV PATH=$PATH:$R_HOME/bin:$R_LIBRARY:$RSTUDIO_PANDOC
 #	libssl-dev
 #	libcurl4-openssl-dev
 #	libxml2-dev
-RUN cd ~/ \
-	&& yum install -y less tk gcc bzip2-devel git gcc-c++ gcc-gfortran libSM libXmu libXt                  \
+RUN yum install -y less tk gcc bzip2-devel git gcc-c++ gcc-gfortran libSM libXmu libXt  \
 	libcurl-devel libicu-devel libtiff make openblas-threads pango pcre2-devel   \
-	tcl xz-devel zip zlib-devel \
-	&& git clone https://github.com/SEMOSS/docker-r.git \
-	&& cd docker-r \
-	&& git checkout ubi8  \
+	tcl xz-devel zip zlib-devel
+
+COPY install_R.sh /root/install_R.sh
+
+COPY Rserv.conf /root/Rserv.conf
+
+RUN cd ~/ \
 	&& chmod +x install_R.sh \
 	&& /bin/bash install_R.sh \
-	# && R CMD javareconf \
 	&& cp -f Rserv.conf /etc/Rserv.conf \
-	&& echo 'options(repos = c(CRAN = "http://cloud.r-project.org/"))' > /opt/R/${R_VERSION}/lib/R/etc/Rprofile.site \
-	&& cd .. \
-	&& rm -r docker-r
+	&& echo 'options(repos = c(CRAN = "http://cloud.r-project.org/"))' > /opt/R/${R_VERSION}/lib/R/etc/Rprofile.site
+
 # && cd /usr/lib/R \
 # && arch=$(arch | sed s/aarch64/arm64/ | sed s/x86_64/amd64/) \
 # && wget "https://github.com/jgm/pandoc/releases/download/2.17.1.1/pandoc-2.17.1.1-linux-${arch}.tar.gz" \
