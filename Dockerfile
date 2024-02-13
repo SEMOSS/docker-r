@@ -1,4 +1,4 @@
-#docker build . -t quay.io/semoss/docker-r:ubi8
+#docker build . -t quay.io/semoss/docker-r:ubi8-rhel
 
 ARG BASE_REGISTRY=registry.access.redhat.com
 ARG BASE_IMAGE=ubi8/ubi
@@ -27,15 +27,10 @@ RUN yum install -y less tk gcc bzip2-devel gcc-c++ gcc-gfortran libSM libXmu lib
 	libcurl-devel libicu-devel libtiff make openblas-threads pango pcre2-devel   \
 	tcl xz-devel zip zlib-devel
 
-COPY install_R.sh /root/install_R.sh
-
-COPY Rserv.conf /root/Rserv.conf
-
-RUN cd ~/ \
-	&& chmod +x install_R.sh \
-	&& /bin/bash install_R.sh \
-	&& cp -f Rserv.conf /etc/Rserv.conf \
-	&& echo 'options(repos = c(CRAN = "http://cloud.r-project.org/"))' > /opt/R/${R_VERSION}/lib/R/etc/Rprofile.site
+COPY install_R.sh /root/
+RUN chmod +x ~/install_R.sh && /bin/bash ~/install_R.sh
+COPY Rserv.conf /etc/Rserv.conf
+RUN echo 'options(repos = c(CRAN = "http://cloud.r-project.org/"))' > /opt/R/${R_VERSION}/lib/R/etc/Rprofile.site
 
 # && cd /usr/lib/R \
 # && arch=$(arch | sed s/aarch64/arm64/ | sed s/x86_64/amd64/) \
