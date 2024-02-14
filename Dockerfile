@@ -23,12 +23,13 @@ ENV PATH=$PATH:$R_HOME/bin:$R_LIBRARY:$RSTUDIO_PANDOC
 #	libssl-dev
 #	libcurl4-openssl-dev
 #	libxml2-dev
-RUN yum install -y less tk gcc bzip2-devel gcc-c++ gcc-gfortran libSM libXmu libXt  \
+RUN cd ~/ \
+	&& yum install -y less tk gcc bzip2-devel gcc-c++ gcc-gfortran libSM libXmu libXt  \
 	libcurl-devel libicu-devel libtiff make openblas-threads pango pcre2-devel   \
-	tcl xz-devel zip zlib-devel
+	tcl xz-devel zip zlib-devel 
 
 COPY install_R.sh /root/
-RUN chmod +x ~/install_R.sh && /bin/bash ~/install_R.sh
+RUN chmod +x /root/install_R.sh && /bin/bash /root/install_R.sh
 COPY Rserv.conf /etc/Rserv.conf
 RUN echo 'options(repos = c(CRAN = "http://cloud.r-project.org/"))' > /opt/R/${R_VERSION}/lib/R/etc/Rprofile.site
 
