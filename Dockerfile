@@ -1,4 +1,4 @@
-#docker build . -t quay.io/semoss/docker-r:cuda12-R4.2.1
+#docker build . -t quay.io/semoss/docker-r:cuda12.2
 
 ARG BASE_REGISTRY=docker.io
 ARG BASE_IMAGE=nvidia/cuda
