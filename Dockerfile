@@ -20,19 +20,15 @@ ENV PATH=$PATH:$R_HOME/bin:$R_LIBRARY:$RSTUDIO_PANDOC
 #	libssl-dev
 #	libcurl4-openssl-dev
 #	libxml2-dev
+COPY install_R.sh /root/install_R.sh
+COPY Rserv.conf /root/Rserv.conf
 RUN apt-get -y update &&  apt -y upgrade \
 	&& cd ~/ \
 	&& apt-get install -y dirmngr wget software-properties-common git apt-transport-https libssl-dev libcurl4-openssl-dev\
-	&& git clone https://github.com/SEMOSS/docker-r.git \
-	&& cd docker-r \
-	&& git checkout R4.2.1-debian11  \
 	&& chmod +x install_R.sh \
 	&& /bin/bash install_R.sh \
-	# && R CMD javareconf \
 	&& cp -f Rserv.conf /etc/Rserv.conf \
 	&& echo 'options(repos = c(CRAN = "http://cloud.r-project.org/"))' >> /etc/R/Rprofile.site \
-	&& cd .. \
-	&& rm -r docker-r \
 	&& cd /usr/lib/R \
 	&& arch=$(arch | sed s/aarch64/arm64/ | sed s/x86_64/amd64/) \
 	&& wget "https://github.com/jgm/pandoc/releases/download/2.17.1.1/pandoc-2.17.1.1-linux-${arch}.tar.gz" \
