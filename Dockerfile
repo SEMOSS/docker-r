@@ -4,7 +4,7 @@ ARG BASE_REGISTRY=docker.io
 ARG BASE_IMAGE=debian
 ARG BASE_TAG=11
 
-FROM ${BASE_REGISTRY}/${BASE_IMAGE}:${BASE_TAG} 
+FROM ${BASE_REGISTRY}/${BASE_IMAGE}:${BASE_TAG} as builder
 
 LABEL maintainer="semoss@semoss.org"
 
@@ -12,16 +12,10 @@ ENV R_HOME=/usr/lib/R
 ENV R_LIBS_SITE=/usr/local/lib/R/site-library
 ENV RSTUDIO_PANDOC=/usr/lib/R/pandoc-2.17.1.1/bin
 ENV PATH=$PATH:$R_HOME/bin:$R_LIBRARY:$RSTUDIO_PANDOC
-# Install R
-# 	(https://www.digitalocean.com/community/tutorials/how-to-install-r-on-debian-9)
-# Reconfigure java for rJava
-# Configure Rserve
-# Install the following (needed for RCurl):
-#	libssl-dev
-#	libcurl4-openssl-dev
-#	libxml2-dev
-COPY install_R.sh /root/install_R.sh
-COPY Rserv.conf /root/Rserv.conf
+
+RUN printenv | grep -E '^(R_LIBS_SITE|R_HOME|RSTUDIO_PANDOC)=' | awk '{print "export " $0}' > /opt/set_env.env
+
+COPY install_R.sh Rserv.conf /root/
 RUN apt-get -y update &&  apt -y upgrade \
 	&& cd ~/ \
 	&& apt-get install -y dirmngr wget software-properties-common git apt-transport-https libssl-dev libcurl4-openssl-dev\
@@ -34,7 +28,9 @@ RUN apt-get -y update &&  apt -y upgrade \
 	&& wget "https://github.com/jgm/pandoc/releases/download/2.17.1.1/pandoc-2.17.1.1-linux-${arch}.tar.gz" \
 	&& tar -xvf pandoc-2.17.1.1-linux-*.tar.gz \
 	&& apt-get clean all
+RUN echo 'if [ -f /opt/set_env.env ]; then set -o allexport; source /opt/set_env.env; set +o allexport; fi' > /etc/profile.d/env.sh
 
+FROM scratch AS final
+COPY --from=builder / /
 WORKDIR /opt
-
 CMD ["bash"]
