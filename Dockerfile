@@ -4,20 +4,13 @@ ARG BASE_REGISTRY=docker.io
 ARG BASE_IMAGE=debian
 ARG BASE_TAG=11
 
-FROM ${BASE_REGISTRY}/${BASE_IMAGE}:${BASE_TAG} 
+FROM ${BASE_REGISTRY}/${BASE_IMAGE}:${BASE_TAG} as builder
 
 LABEL maintainer="semoss@semoss.org"
 
-# Install R
-# 	(https://www.digitalocean.com/community/tutorials/how-to-install-r-on-debian-9)
-# Reconfigure java for rJava
-# Configure Rserve
-# Install the following (needed for RCurl):
-#	libssl-dev
-#	libcurl4-openssl-dev
-#	libxml2-dev
 COPY install_R.sh /root/install_R.sh
 COPY Rserv.conf /root/Rserv.conf
+
 RUN apt-get update \
 	&& cd ~/ \
 	&& apt-get install -y dirmngr git wget software-properties-common apt-transport-https apt-utils libssl-dev libcurl4-openssl-dev libxml2-dev \
@@ -31,6 +24,7 @@ RUN apt-get update \
 	&& tar -xvf pandoc-2.17.1.1-linux-*.tar.gz \
 	&& apt-get clean all
 
+FROM scratch AS final
+COPY --from=builder / /
 WORKDIR /opt
-
 CMD ["bash"]
