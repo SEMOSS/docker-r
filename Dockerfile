@@ -13,7 +13,7 @@ ENV R_LIBS_SITE=/usr/local/lib/R/site-library
 ENV RSTUDIO_PANDOC=/usr/lib/R/pandoc-2.17.1.1/bin
 ENV PATH=$PATH:$R_HOME/bin:$R_LIBRARY:$RSTUDIO_PANDOC
 
-RUN printenv | grep -E '^(R_LIBS_SITE|R_HOME|RSTUDIO_PANDOC)=' | awk '{print "export " $0}' > /opt/set_env.env
+RUN printenv | grep -E '^(R_LIBS_SITE|R_HOME|RSTUDIO_PANDOC|PATH)=' | awk '{print "export " $0}' > /opt/set_env.env
 
 COPY install_R.sh Rserv.conf /root/
 RUN apt-get -y update &&  apt -y upgrade \
@@ -33,4 +33,4 @@ RUN echo 'if [ -f /opt/set_env.env ]; then set -o allexport; source /opt/set_env
 FROM scratch AS final
 COPY --from=builder / /
 WORKDIR /opt
-CMD ["bash"]
+CMD ["sh", "-c", "source /opt/set_env.env && exec $TOMCAT_HOME/bin/start.sh"]
