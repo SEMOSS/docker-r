@@ -18,7 +18,7 @@ RUN printenv | grep -E '^(R_LIBS_SITE|R_HOME|RSTUDIO_PANDOC|PATH)=' | awk '{prin
 COPY install_R.sh Rserv.conf /root/
 RUN apt-get -y update &&  apt -y upgrade \
 	&& cd ~/ \
-	&& apt-get install -y dirmngr wget software-properties-common git apt-transport-https libssl-dev libcurl4-openssl-dev\
+	&& apt-get install -y dirmngr wget software-properties-common git apt-utils apt-transport-https libssl-dev libcurl4-openssl-dev libxml2-dev \
 	&& chmod +x install_R.sh \
 	&& /bin/bash install_R.sh \
 	&& cp -f Rserv.conf /etc/Rserv.conf \
