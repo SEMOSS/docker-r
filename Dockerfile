@@ -21,7 +21,7 @@ RUN printenv | grep -E '^(R_VERSION|R_LIBS_SITE|R_HOME|RSTUDIO_PANDOC)=' | awk '
 
 RUN apt-get -y update &&  apt -y upgrade \
 	&& cd ~/ \
-	&& apt-get install -y dirmngr wget software-properties-common apt-transport-https libssl-dev libcurl4-openssl-dev\
+	&& apt-get install -y dirmngr wget software-properties-common apt-transport-https apt-utils libssl-dev libcurl4-openssl-dev libxml2-dev \
 	&& mkdir /opt/docker-r
 
 COPY . /opt/docker-r
@@ -42,6 +42,7 @@ RUN cd /usr/lib/R \
 	&& apt-get clean all
 
 FROM scratch AS final
+
 COPY --from=builder / /
 WORKDIR /opt
 CMD ["bash"]

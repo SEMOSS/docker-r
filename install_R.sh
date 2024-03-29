@@ -8,6 +8,7 @@ if [[ $arch == x86_64* ]]; then
 	apt-get update
 	apt-get -y install r-base-core=4.2.3-1.2204.0 --allow-downgrades
 	apt-get -y install r-doc-html=4.2.3-1.2204.0 --allow-downgrades
+    apt-get -y install r-base-dev=4.2.3-1.2204.0 --allow-downgrades
 elif  [[ $arch == arm* ]] || [[ $arch = aarch64 ]]; then
     echo "ARM Architecture"
     echo "deb http://http.debian.net/debian sid main" > /etc/apt/sources.list.d/debian-unstable.list
