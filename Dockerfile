@@ -7,9 +7,9 @@ ARG BASE_TAG=8.9
 FROM ${BASE_REGISTRY}/${BASE_IMAGE}:${BASE_TAG} as builder
 
 LABEL maintainer="semoss@semoss.org"
-ENV R_VERSION=4.2.3
-ENV R_LIBS_SITE=/opt/R/4.2.3/lib/R/library
-ENV R_HOME=/opt/R/4.2.3
+ENV R_VERSION=4.4.0
+ENV R_LIBS_SITE=/opt/R/4.4.0/lib/R/library
+ENV R_HOME=/opt/R/4.4.0
 ENV RSTUDIO_PANDOC=/usr/lib/R/pandoc-2.17.1.1/bin
 
 ENV PATH=$PATH:$R_HOME/bin:$R_LIBRARY:$RSTUDIO_PANDOC
