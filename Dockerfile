@@ -5,7 +5,7 @@ ARG BASE_IMAGE=nvidia/cuda
 ARG BASE_TAG=12.2.2-devel-ubuntu22.04
 ARG DEBIAN_FRONTEND=noninteractive
 
-FROM ${BASE_REGISTRY}/${BASE_IMAGE}:${BASE_TAG} as builder
+FROM ${BASE_REGISTRY}/${BASE_IMAGE}:${BASE_TAG} AS builder
 
 LABEL maintainer="semoss@semoss.org"
 
